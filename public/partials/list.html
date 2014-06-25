@@ -1,0 +1,45 @@
+
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="wow fadeInLeft">Polls</h1>
+        <h2 class="wow fadeInRight">Because Your Vote is Important to Us!</h2>
+        <p class="wow fadeInUp headerp">
+            <a class="btn btn-info btn-lg" href="#/new"><i class="fa fa-plus-square"></i> Create now Your own Poll!</a>
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+      <input type="text" class="form-control input-lg" ng-model="query" placeholder="Search for a poll">
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12"><hr></div>
+</div>
+<div class="row" ng-switch on="polls.length">
+	<ul ng-switch-when="0">
+	  <li>
+	  	<em>No polls in database. Would you like to
+		<a href="#/new">create one</a>?
+	</li>
+    </ul>
+</div>
+
+<div class="row vote-block">
+    <div class="col-sm-12">
+    <div class="col-sm-4" ng-repeat="poll in polls | filter:query">
+    <div class="thumbnail wow" ng-class-odd="'slideInLeft'" ng-class-even="'slideInRight'">
+      <img src="img/vote.jpg" alt="vote" class="img-responsive img-vote">
+      <div class="caption">
+        <h3>{{poll.question}}</h3>
+        <p><a ng-href="#/poll/{{poll._id}}" class="btn btn-info btn-block" role="button"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i> Vote</a></p>
+      </div>
+    </div>
+        </div>
+    </div>
+</div>
+<script>
+ new WOW().init();
+</script>
