@@ -1,0 +1,31 @@
+Build a script in PHP/JS/PYTHON to get information from Zillow.com:
+
+Run for each of the locations: 
+*. Essex County, NJ
+*. Union County, NJ
+*. Hudson County, NJ
+*. Bergen County, NJ
+
+Filter options:
+* Property type: Houses, Apartments, condos and townhouses
+* Days on Zillow: 1 Day
+* For Sale properties (with all sub-options checked EXCEPT for "Foreclosure")
+
+After getting the properties on the result set, we need to:
+* Get the "For Sale" price number
+* Get the "Rent Zestimate" number
+* Get the most updated "Property taxes" number - This is usually presented on the page for a few years back, we only need the latest.
+   See Tax History Here (we only care about the top line [2013]) - NOTE: does not exist for each property - IGNORE ones without it
+   http://www.zillow.com/homedetails/243-Old-Chester-Rd-Essex-Fells-NJ-07021/69527478_zpid/
+
+On a nightly basis the above properties should be processed and the process needs to present:
+A list of properties that have the following ratio higher than X. (X can be configurable).
+       Ratio = ("Rent Zestimate" * 12 - "Property Taxes") / "For Sale" Price  
+
+The list should show:
+* The Ratio (%)
+* The price of the property
+* The town the property is at
+* The link to the property page
+
+  

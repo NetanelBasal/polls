@@ -10,6 +10,8 @@ var mongoose = require('mongoose');
 var db = mongoose.createConnection('localhost', 'pollsapp');
 var PollSchema = require('../models/Poll.js').PollSchema;
 var Poll = db.model('polls', PollSchema);
+var _ = require('lodash-node');
+
 exports.index = function(req, res) {
     res.render('index', {
         title: 'Polls'
@@ -17,7 +19,9 @@ exports.index = function(req, res) {
 };
 // JSON API for list of polls
 exports.list = function(req, res) {
-    Poll.find({}, 'question', function(error, polls) {
+    Poll.find({
+        privatePoll: false
+    }, 'question', function(error, polls) {
         res.json(polls);
     });
 };
@@ -61,23 +65,28 @@ exports.poll = function(req, res) {
 // JSON API for creating a new poll
 exports.create = function(req, res) {
 
-    var reqBody = req.body,
-        choices = reqBody.choices.filter(function(v) {
-            return v.text != '';
-        }),
-        pollObj = {
-            question: reqBody.question,
-            choices: choices,
-            privatePoll: reqBody.privatePoll
-        };
-    var poll = new Poll(pollObj);
-    poll.save(function(err, doc) {
-        if (err || !doc) {
-            throw 'Error';
+    pollObj = {
+        question: req.body.question,
+        choices: JSON.parse(req.body.choices),
+        privatePoll: req.body.privatePoll
+    };
+
+    new Poll(pollObj).save(function(err, poll) {
+        var id = poll._id;
+        if (!_.isEmpty(req.files)) {
+            fs.readFile(req.files.file0.path, function(err, data) {
+                var newPath = __dirname + "/../public/img/polls/" + id + ".jpg";
+                fs.writeFile(newPath, data, function(err) {
+                    res.json(poll);
+                });
+            });
         } else {
-            res.json(doc);
+            res.json(poll);
         }
+
     });
+
+
 };
 
 // Socket API for saving a vote

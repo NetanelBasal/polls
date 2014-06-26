@@ -2,7 +2,7 @@
  * The pollsApp module
  */
 
-angular.module('polls', ['pollServices', 'pollDirectives'])
+angular.module('polls', ['pollServices', 'pollDirectives', 'angularFileUpload'])
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider.

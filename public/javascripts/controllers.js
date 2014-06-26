@@ -39,7 +39,7 @@ function PollItemCtrl($scope, $routeParams, socket, Poll, $http) {
 
 
 // Creating a new poll
-function PollNewCtrl($scope, $location, Poll) {
+function PollNewCtrl($scope, $location, Poll, $upload) {
 
     $scope.poll = {
         question: '',
@@ -51,17 +51,34 @@ function PollNewCtrl($scope, $location, Poll) {
         }]
     };
 
+    $scope.file = [];
+    $scope.onFileSelect = function($files) {
+        for (var i = 0; i < $files.length; i++) {
+            $scope.file.push($files[i]);
+        }
+    }
+
     $scope.createPoll = function() {
-        var poll = $scope.poll;
-        if (poll.question.length > 0) {
-            var newPoll = new Poll(poll);
-            newPoll.$save(function(p, resp) {
-                if (!p.error) {
-                    $scope.link = p._id;
+        $scope.minLen = false;
+        if ($scope.poll.pollType == true) {
+            $scope.poll.privatePoll = true;
+        }
+        if ($scope.poll.question.length > 0) {
+            $scope.upload = $upload.upload({
+                url: '/polls',
+                data: $scope.poll,
+                file: $scope.file,
+            }).progress(function(evt) {
+                if ($scope.file.length >= 1) {
+                    $scope.loader = parseInt(100.0 * evt.loaded / evt.total) + '%';
                 }
+            }).success(function(data) {
+                $scope.link = data._id;
             });
         } else {
             $scope.minLen = true;
         }
     };
+
+
 }
