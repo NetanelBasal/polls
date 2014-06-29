@@ -46,116 +46,78 @@ angular.module('pollDirectives', [])
                         }
                         $scope.goodVoteId = res.data.choices[0]._id;
                         $scope.badVoteId = res.data.choices[1]._id;
+
                         $scope.poll = res.data;
+                        console.log($scope.poll);
 
-                        var gaugeOptions = {
+
+                        $('.good').highcharts({
                             chart: {
-                                type: 'solidgauge',
-                                backgroundColor: '#E6E6E6'
+                                plotBackgroundColor: null,
+                                plotBorderWidth: 0,
+                                plotShadow: false
                             },
-                            title: null,
-                            pane: {
-                                center: ['50%', '85%'],
-                                size: '140%',
-                                startAngle: -90,
-                                endAngle: 90,
-                                background: {
-                                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || '#EEE',
-                                    innerRadius: '60%',
-                                    outerRadius: '100%',
-                                    shape: 'arc'
-                                }
+                            exporting: {
+                                enabled: false
                             },
-
+                            credits: {
+                                text: null
+                            },
+                            title: {
+                                text: 'Votes',
+                                align: 'center',
+                                verticalAlign: 'middle',
+                                y: 50
+                            },
                             tooltip: {
                                 enabled: false
                             },
-                            yAxis: {
-                                stops: [
-                                    [1, 'rgb(0, 184, 0)']
-                                ],
-                                lineWidth: 0,
-                                minorTickInterval: null,
-                                tickPixelInterval: 400,
-                                tickWidth: 0,
-                                title: {
-                                    y: -70
-                                },
-                                labels: {
-                                    y: 16
-                                }
-                            },
                             plotOptions: {
-                                solidgauge: {
+                                pie: {
                                     dataLabels: {
-                                        y: 5,
-                                        borderWidth: 0,
-                                        useHTML: true
-                                    }
+                                        enabled: true,
+                                        formatter: function() {
+                                            return this.y + '% ' + this.point.name;
+                                        },
+                                        distance: -50,
+                                        style: {
+                                            fontWeight: 'bold',
+                                            fontSize: '13px',
+                                            color: '#3068b2'
+                                        }
+                                    },
+                                    startAngle: -90,
+                                    endAngle: 90,
+                                    center: ['50%', '75%']
                                 }
-                            }
-                        };
-
-                        $('.good').highcharts(Highcharts.merge(gaugeOptions, {
-                            yAxis: {
-                                min: 0,
-                                max: 100,
-                                title: {
-                                    text: 'good',
-                                    style: {
-                                        color: 'rgb(0, 184, 0)',
-                                        fontSize: '20px'
-                                    }
-                                },
-                            },
-                            credits: {
-                                enabled: false
                             },
                             series: [{
-                                name: 'Votes',
-                                data: [res.data.choices[0].votes.length],
-                                dataLabels: {
-                                    format: '<div style="text-align:center"><span style="font-size:25px;color:rgb(0, 184, 0)">{y}</span><br/>' +
-                                        '<span style="font-size:16px;color:#0C3D5E">Votes</span></div>'
-                                },
-                                tooltip: {
-                                    valueSuffix: null
-                                }
-                            }]
-
-                        }));
-
-                        /* Bad Pay */
-                        $('.bad').highcharts(Highcharts.merge(gaugeOptions, {
-                            yAxis: {
-                                stops: [
-                                    [1, 'rgb(252, 76, 76)']
-                                ],
-                                min: 0,
-                                max: 100,
-                                title: {
-                                    text: 'bad',
-                                    style: {
-                                        color: 'rgb(252, 76, 76)',
-                                        fontSize: '20px'
+                                type: 'pie',
+                                states: {
+                                    hover: {
+                                        enabled: false
                                     }
                                 },
-                            },
-                            credits: {
-                                enabled: false
-                            },
-                            series: [{
-                                name: 'Votes',
-                                data: [res.data.choices[1].votes.length],
-                                dataLabels: {
-                                    format: '<div style="text-align:center"><span style="font-size:25px;color:rgb(252, 76, 76)">{y}</span><br/>' +
-                                        '<span style="font-size:16px;color:#0C3D5E">Votes</span></div>'
-                                },
-                                tooltip: {
-                                    valueSuffix: null
-                                }
+                                innerSize: '50%',
+                                data: [{
+                                    name: 'good',
+                                    y: res.data.choices[0].votes.length,
+                                    color: '#4dcc95',
+                                    dataLabels: {
+                                        enabled: true
+                                    }
+                                }, {
+                                    name: 'bad',
+                                    color: '#e57780',
+                                    y: res.data.choices[1].votes.length,
+                                    dataLabels: {
+                                        enabled: true
+                                    }
+                                }]
                             }]
-                        }));
+
+                        });
+
                     })
                 }
             };

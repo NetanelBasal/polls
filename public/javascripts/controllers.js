@@ -5,10 +5,13 @@
 
 // Managing the poll list
 function PollListCtrl($scope, Poll) {
-    $scope.polls = Poll.query();
+    $scope.polls = Poll.query(function(d) {
+        console.log(d);
+    });
+
 }
 // Voting / viewing poll results
-function PollItemCtrl($scope, $routeParams, socket, Poll, $http) {
+function PollItemCtrl($scope, $routeParams, socket, Poll) {
 
     socket.on('myvote', function(data) {
         console.dir(data);

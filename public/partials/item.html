@@ -1,6 +1,13 @@
 <div class="jumbotron wow slideInDown" data-wow-duration="2s">
     <div class="container">
-        <h1 style="max-width: 800px;">{{poll.question}}</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2 style="max-width: 800px;">{{poll.question}}</h2>
+            </div>
+            <div class="col-sm-6">
+                <img onerror="this.src='img/vote.jpg';" src="/img/polls/{{poll._id}}.jpg" alt="vote" class="img-responsive item-image">
+            </div>
+        </div>
     </div>
 </div>
 <div ng-hide="poll.userVoted">
@@ -17,20 +24,17 @@
     <p><hr></p>
 </div>
 <div>
+<div class="row numVotesWrapper">
+     <p><em><span class="numVotes wow flipInX" data-wow-delay="0.5s">{{poll.totalVotes}}</span> votes counted so far. <span ng-show="poll.userChoice">
+</div>
     <div class="row" show-poll>
         <div class="col-sm-12">
-            <div class="col-sm-6">
-                <div class="good" style="height: 200px;"></div>
-            </div>
-            <div class="col-sm-6">
-                <div class="bad" style="height: 200px;"></div>
-            </div>
+                <div class="good"></div>
         </div>
     </div>
-    <div class="row numVotesWrapper">
-        <div class="col-sm-6 col-sm-push-3">
-            <p><em><span class="numVotes wow flipInX" data-wow-delay="0.5s">{{poll.totalVotes}}</span> votes counted so far. <span ng-show="poll.userChoice">You voted for <strong class="bad" ng-class="{good: goodBad()}">{{poll.userChoice.text}}</strong>.</span></em>
-            </p>
+    <div class="row numVotesWrapper" style="margin-top:50px;">
+        <div class="col-sm-6 col-sm-push-3"><h3>You voted for <strong class="bad" ng-class="{good: goodBad()}">{{poll.userChoice.text}}</strong>.</span></em>
+            </h3>
         </div>
     </div>
     <p><hr></p>

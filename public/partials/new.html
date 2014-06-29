@@ -16,16 +16,16 @@
     </div>
     <div class="form-group" ng-hide="link">
         <input type="checkbox" id="type" ng-model="poll.pollType">
-        <label for="type">Private</label>
+        <label for="type">Private Poll</label>
     </div>
     <div class="form-group" ng-hide="link">
         <input name="picvote" type="file" ng-file-select="onFileSelect($files)">
     </div>
-    <div class="progress progress-striped active" style="height:36px;">
+   <!--  <div class="progress progress-striped active" style="height:36px;">
         <div class="progress-bar progress-bar-info" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="width: {{loader}}; text-align: center; padding-top:8px;">
             {{loader}}
         </div>
-    </div>
+    </div> -->
     <div class="form-group" ng-hide="link">
         <button class="btn btn-warning btn-block btn-lg" type="submit">Create Poll</button>
     </div>
