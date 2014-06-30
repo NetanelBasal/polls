@@ -2,7 +2,7 @@
  * The pollsApp module
  */
 
-angular.module('polls', ['pollServices', 'pollDirectives', 'angularFileUpload'])
+angular.module('polls', ['pollServices', 'pollDirectives', 'angularFileUpload', "highcharts-ng"])
     .config(['$routeProvider',
         function($routeProvider) {
             $routeProvider.

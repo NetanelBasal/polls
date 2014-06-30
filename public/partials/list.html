@@ -1,47 +1,50 @@
-
 <div class="jumbotron">
     <div class="container">
         <h1 class="wow fadeInLeft">Polls</h1>
         <h2 class="wow fadeInRight">Because Your Vote is Important to Us!</h2>
         <p class="wow fadeInUp headerp">
-            <a class="btn btn-info btn-lg" href="#/new"><i class="fa fa-plus-square"></i> Create now Your own Poll!</a>
+        <a class="btn btn-info btn-lg" href="#/new"><i class="fa fa-plus-square"></i> Create now Your own Poll!</a>
         </p>
     </div>
 </div>
-
 <div class="row">
     <div class="col-xs-12">
-      <input type="text" class="form-control input-lg" ng-model="query" placeholder="Search for a poll">
+        <input type="text" class="form-control input-lg" ng-model="query" placeholder="Search for a poll">
     </div>
-</div>
-
-<div class="row">
-	<div class="col-xs-12"><hr></div>
-</div>
-<div class="row" ng-switch on="polls.length">
-	<ul ng-switch-when="0">
-	  <li>
-	  	<em>No polls in database. Would you like to
-		<a href="#/new">create one</a>?
-	</li>
-    </ul>
-</div>
-
-<div class="row vote-block">
-    <div class="col-sm-12">
-    <div class="col-sm-4" ng-repeat="poll in polls | filter:query">
-    <div class="thumbnail">
-      <img onerror="this.src='img/vote.jpg';" src="/img/polls/{{poll._id}}.jpg" alt="vote" class="img-responsive img-vote">
-      <div class="caption">
-        <h3>{{poll.question}}</h3>
-        <p><a ng-href="#/poll/{{poll._id}}" class="btn btn-info btn-block" role="button"><i class="fa fa-heart"></i> Vote <i class="fa fa-thumbs-down"></i></a></p>
-      </div>
-    </div>
+    <div class="col-xs-12">
+        <div class="form-group">
+            <select ng-change="filt()" class="form-control input-lg" ng-model="filterResults" name="filter">
+             <option value="" selected="selected">All Polls</option>
+                <option value="voted" ng-show="haveVoted">I Voted</option>
+                <option ng-show="haveNotVoted" value="notvoted">I Dont Voted</option>
+            </select>
         </div>
     </div>
 </div>
-<script>
- new WOW().init();
-</script>
-
+<div class="row">
+    <div class="col-xs-12"><hr></div>
+</div>
+<div class="row" ng-switch on="polls.length">
+    <ul ng-switch-when="0" class="list-unstyled">
+        <li>
+            <h2>No polls in database. Would you like to <a href="#/new">create one?</a></h2>
+        </li>
+    </ul>
+</div>
+<div class="row vote-block">
+    <div class="col-sm-12">
+        <div class="col-sm-4" ng-repeat="poll in polls | filter:query">
+            <div class="thumbnail">
+                <img onerror="this.src='img/vote.jpg';" src="/img/polls/{{poll._id}}.jpg" alt="vote" class="img-responsive img-vote">
+                <div class="caption">
+                    <h3>{{poll.question}}</h3>
+                    <p><a ng-href="#/poll/{{poll._id}}" class="btn btn-info btn-block" role="button"><span ng-hide="poll.userVote"><i class="fa fa-heart"></i> Vote
+                        <i class="fa fa-thumbs-down"></i></span>
+                        <span ng-show="poll.userVote">You voted  <i class="fa" ng-class="{'fa-thumbs-down':isBad(poll.userChoice), 'fa-heart':!isBad(poll.userChoice)}"></i></span>
+                    </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!--  ng-class-odd="'slideInLeft'" ng-class-even="'slideInRight'" -->

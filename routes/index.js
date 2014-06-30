@@ -22,23 +22,21 @@ exports.list = function(req, res) {
     Poll.find({
         privatePoll: false
     }, function(error, polls) {
-        // var pollls = [];
-        // _(polls).forEach(function(poll, key) {
-        //     var userVoted = false;
-        //     for (c in poll.choices) {
-        //         var choice = poll.choices[c];
-        //         for (v in choice.votes) {
-        //             var vote = choice.votes[v];
-        //             if (vote.ip === (req.header('x-forwarded-for') || req.ip)) {
-        //                 userVoted = true;
-        //             }
-        //         }
-        //     }
-        //     poll.userVoted = userVoted;
-        //     pollls.push(poll);
-        // })
-        // console.log(pollls);
-        res.json(polls)
+        var pollls = [];
+        _(polls).forEach(function(poll, key) {
+            var userVoted = false;
+            for (c in poll.choices) {
+                var choice = poll.choices[c];
+                for (v in choice.votes) {
+                    var vote = choice.votes[v];
+                    if (vote.ip === (req.header('x-forwarded-for') || req.ip)) {
+                        poll.userVote = true;
+                        poll.userChoice = choice.text
+                    }
+                }
+            }
+        })
+        res.json(polls);
     });
 };
 // JSON API for getting a single poll

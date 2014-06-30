@@ -49,6 +49,8 @@ width: 60%;
 
 .jumbotron {
     box-shadow: 1px 1px 1px #000;
+    max-height: 270px;
+    margin-bottom:5px;
 }
 
 .jumbotron h1,.jumbotron h2  {
@@ -82,7 +84,7 @@ width: 60%;
 
 
 .numVotes {
-    font-size: 4em;
+    font-size: 3em;
     color: rgb(92, 38, 38);
     text-shadow: 1px 4px 3px #fff;
 }
@@ -92,7 +94,7 @@ width: 60%;
 }
 
 .numVotesWrapper p {
-    font-size: 2.5em;
+    font-size: 1.5em;
 }
 
 .headerp {
@@ -119,5 +121,9 @@ width: 60%;
 
 .item-image {
   max-width: 400px;
-max-height: 250px;
+max-height: 200px;
+}
+
+.votes {
+    height: 300px;
 }

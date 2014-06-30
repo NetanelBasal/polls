@@ -24,15 +24,19 @@
     <p><hr></p>
 </div>
 <div>
-<div class="row numVotesWrapper">
-     <p><em><span class="numVotes wow flipInX" data-wow-delay="0.5s">{{poll.totalVotes}}</span> votes counted so far. <span ng-show="poll.userChoice">
-</div>
-    <div class="row" show-poll>
-        <div class="col-sm-12">
-                <div class="good"></div>
+    <div class="row numVotesWrapper">
+        <div class="col-sm-6 col-sm-push-3">
+            <p ng-show="poll.totalVotes"><em><span class="numVotes wow flipInX" data-wow-delay="0.5s">{{poll.totalVotes}}</span> votes counted so far</p>
+            <p ng-hide="poll.totalVotes">NO BODY VOTE ON THIS POLL. BE THE FIRST!</p>
         </div>
     </div>
-    <div class="row numVotesWrapper" style="margin-top:50px;">
+    <div class="row">
+        <div class="col-sm-6 col-sm-push-3">
+            <div ng-show="noVotes" style="text-align: center;"><h1>No Votes on this Poll</h1></div>
+            <div ng-show="poll.totalVotes" class="votes"></div>
+        </div>
+    </div>
+    <div class="row numVotesWrapper" style="margin-top:50px;" ng-show="poll.totalVotes">
         <div class="col-sm-6 col-sm-push-3"><h3>You voted for <strong class="bad" ng-class="{good: goodBad()}">{{poll.userChoice.text}}</strong>.</span></em>
             </h3>
         </div>
